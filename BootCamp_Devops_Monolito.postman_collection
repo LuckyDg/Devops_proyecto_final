@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "49ba9ce8-1567-497e-ae42-705e3c3873db",
+		"name": "BootCamp Devops Monolito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32198751"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/SHADOW/Downloads/avatar-image/1-small.png"
+								},
+								{
+									"key": "username",
+									"value": "Alberto",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "albertaao2442@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Alberto1234@",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "62871237812",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}api/auth/register",
+							"host": [
+								"{{api_url}}api"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify token",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFsYmVydG8iLCJlbWFpbCI6ImFsYmVydG9AZXhhbXBsZS5jb20iLCJpYXQiOjE3MzQzMDg1NDksImV4cCI6MTczNDMwODYwOX0.BhIA4FLZRXcvvAFGnm3U6x3h61bRxA1ZfkLcQQmQ9s4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}api/auth/verify",
+							"host": [
+								"{{api_url}}api"
+							],
+							"path": [
+								"auth",
+								"verify"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"alberto@example.com\",\r\n    \"password\": \"Alberto1234!s\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}api/auth/login",
+							"host": [
+								"{{api_url}}api"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"alberto@example.com\",\r\n    \"password\": \"Alberto1234!s\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}api/auth/users?page=1&limit=10",
+							"host": [
+								"{{api_url}}api"
+							],
+							"path": [
+								"auth",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1",
+			"type": "default"
+		},
+		{
+			"key": "api_url",
+			"value": "http://127.0.0.1:64001/",
+			"type": "default"
+		}
+	]
+}
