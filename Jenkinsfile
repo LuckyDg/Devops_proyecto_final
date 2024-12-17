@@ -2,18 +2,18 @@ pipeline {
     agent any
 
     environment {
-        API_PORT = ${API_PORT}
-        DB_HOST = ${DB_HOST}
-        DB_PORT = ${DB_PORT}
-        DB_USER = ${DB_USER}
-        DB_PASS = ${DB_PASS}
-        DB_NAME = ${DB_NAME}
-        JWT_SECRET = ${JWT_SECRET}
-        AWS_ACCESS_KEY_ID = ${AWS_ACCESS_KEY_ID}
-        AWS_SECRET_ACCESS_KEY = ${AWS_SECRET_ACCESS_KEY}
-        S3_BUCKET = ${S3_BUCKET}
-        FRONTEND_PORT = ${FRONTEND_PORT}
-        NEXT_PUBLIC_API_URL = ${NEXT_PUBLIC_API_URL}
+        API_PORT = credentials('API_PORT')
+        DB_HOST = credentials('DB_HOST')
+        DB_PORT = credentials('DB_PORT')
+        DB_USER = credentials('DB_USER')
+        DB_PASS = credentials('DB_PASS')
+        DB_NAME = credentials('DB_NAME')
+        JWT_SECRET = credentials('JWT_SECRET')
+        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        S3_BUCKET = credentials('S3_BUCKET')
+        FRONTEND_PORT = credentials('FRONTEND_PORT')
+        NEXT_PUBLIC_API_URL = credentials('NEXT_PUBLIC_API_URL')
     }
 
     stages {
