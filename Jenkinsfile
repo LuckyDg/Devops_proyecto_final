@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws_access_key') 
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
-        DOCKER_IMAGE = 'luckydg/ms-auth:latest'
+        DOCKER_IMAGE_BACKEND = 'luckydg/ms-auth:latest'
     }
     stages {
         stage('Checkout') {
@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker build -t ${DOCKER_IMAGE} .
+                    docker build -t ${DOCKER_IMAGE_BACKEND} api-users
                     """
                 }
             }
@@ -23,10 +23,12 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh """
-                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-                    docker push ${DOCKER_IMAGE}
-                    """
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials-id', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh """
+                        echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                        docker push ${DOCKER_IMAGE_BACKEND}
+                        """
+                    }
                 }
             }
         }
@@ -62,7 +64,6 @@ pipeline {
                     kubectl config set-context aws-cluster
                     kubectl config use-context aws-cluster
                     """
-
                     sh """
                     kubectl apply -f k8s/deployment.yml
                     """
