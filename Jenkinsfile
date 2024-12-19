@@ -3,7 +3,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID = credentials('aws_access_key') 
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
-        DOCKER_IMAGE_BACKEND = 'luckydg/ms-auth:latest'
+        DOCKER_IMAGE = 'luckydg/ms-auth:latest'
         DB_HOST = credentials('DB_HOST')
         DB_PORT = credentials('DB_PORT')
         DB_USER = credentials('DB_USER')
