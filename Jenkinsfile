@@ -20,7 +20,15 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker build -t ${DOCKER_IMAGE_BACKEND} api-users
+                     docker build \
+                        --build-arg DB_HOST=${DB_HOST} \
+                        --build-arg DB_PORT=${DB_PORT} \
+                        --build-arg DB_USER=${DB_USER} \
+                        --build-arg DB_PASS=${DB_PASS} \
+                        --build-arg JWT_SECRET=${JWT_SECRET} \
+                        --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                        --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+                        -t ${DOCKER_IMAGE} api-users
                     """
                 }
             }
