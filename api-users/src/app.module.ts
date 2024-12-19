@@ -16,6 +16,9 @@ import { FilesModule } from './files/files.module';
       database: envs.db_name,
       synchronize: true,
       entities: [User],
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     AuthModule,
     FilesModule,

@@ -4,10 +4,8 @@ metadata:
   name: fullstack-config
 data:
   API_PORT: "64001"
-  DB_HOST: "database-1.chwyuocaecak.us-east-1.rds.amazonaws.com"
+  DB_HOST: "auth-db-service"
   DB_PORT: "5432"
-  DB_NAME: "postgres"
-  DB_USER: "postgres"
-  DB_PASS: "postgres"
+  DB_NAME: "auth_db_devops"
   NEXT_PUBLIC_API_URL: "http://api-users-service:64001/api"
   S3_BUCKET: "bucketdeprueba-19329223"

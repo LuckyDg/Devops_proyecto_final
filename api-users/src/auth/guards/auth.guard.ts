@@ -7,7 +7,7 @@ import { envs } from 'src/config';
 export class AuthGuard implements CanActivate {
   private readonly logger = new Logger('AuthGuard');
 
-  constructor(private jwtService: JwtService) {}
+  constructor(private readonly jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();

@@ -1,115 +1,78 @@
 pipeline {
     agent any
-
     environment {
-        API_PORT = credentials('API_PORT')
-        DB_HOST = credentials('DB_HOST')
-        DB_PORT = credentials('DB_PORT')
-        DB_USER = credentials('DB_USER')
-        DB_PASS = credentials('DB_PASS')
-        DB_NAME = credentials('DB_NAME')
-        JWT_SECRET = credentials('JWT_SECRET')
-        AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
-        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        S3_BUCKET = credentials('S3_BUCKET')
-        FRONTEND_PORT = credentials('FRONTEND_PORT')
-        NEXT_PUBLIC_API_URL = credentials('NEXT_PUBLIC_API_URL')
+        AWS_ACCESS_KEY_ID = credentials('aws_access_key') 
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_key')
+        DOCKER_IMAGE = 'luckydg/ms-auth:latest'
     }
-
     stages {
         stage('Checkout') {
             steps {
-                echo "Clonando el repositorio..."
-                git url: 'https://github.com/LuckyDg/Devops_proyecto_final.git', branch: 'develop'
+                git 'https://github.com/LuckyDg/Devops_proyecto_final.git'
             }
         }
-
-        stage('Build Docker Images') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    echo "Construyendo imágenes Docker..."
-                    sh 'docker build -t ms-auth:latest ./api-users'
-                    sh 'docker build -t client-user-interface:latest ./client-user-interface'
+                    sh """
+                    docker build -t ${DOCKER_IMAGE} .
+                    """
                 }
             }
         }
-
-        stage('Run Containers') {
+        stage('Push Docker Image') {
             steps {
                 script {
-                    echo "Levantando los contenedores..."
-                    sh '''
-                    docker network create user-network-app || true
-                    docker run -d --name auth-db --network user-network-app \
-                        -e POSTGRES_USER=${DB_USER} \
-                        -e POSTGRES_PASSWORD=${DB_PASS} \
-                        -e POSTGRES_DB=${DB_NAME} \
-                        -p ${DB_PORT}:${DB_PORT} postgres:14.3-alpine
-
-                    docker run -d --name api-users --network user-network-app \
-                        -e PORT=${API_PORT} \
-                        -e DB_HOST=${DB_HOST} \
-                        -e DB_PORT=${DB_PORT} \
-                        -e DB_USER=${DB_USER} \
-                        -e DB_PASS=${DB_PASS} \
-                        -e DB_NAME=${DB_NAME} \
-                        -e JWT_SECRET=${JWT_SECRET} \
-                        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-                        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-                        -e S3_BUCKET=${S3_BUCKET} \
-                        -p ${API_PORT}:${API_PORT} ms-auth:latest
-
-                    docker run -d --name client-user-interface --network user-network-app \
-                        -e NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL} \
-                        -p ${FRONTEND_PORT}:${FRONTEND_PORT} client-user-interface:latest
-                    '''
+                    sh """
+                    echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                    docker push ${DOCKER_IMAGE}
+                    """
                 }
             }
         }
-
-        stage('Healthcheck') {
+        stage('Terraform Init') {
             steps {
-                script {
-                    echo "Verificando healthchecks..."
-                    sh '''
-                    echo "Esperando a que los contenedores levanten correctamente..."
-                    sleep 10
-
-                    echo "Probando healthcheck de API Users..."
-                    curl --fail http://localhost:${API_PORT}/health || exit 1
-
-                    echo "Probando healthcheck de Client User Interface..."
-                    curl --fail http://localhost:${FRONTEND_PORT}/ || exit 1
-                    '''
-                }
+                sh """
+                cd terraform
+                terraform init
+                """
             }
         }
-
-        stage('Cleanup') {
+        stage('Terraform Plan') {
+            steps {
+                sh """
+                cd terraform
+                terraform plan
+                """
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                input "¿Aplicar los cambios en AWS?"
+                sh """
+                cd terraform
+                terraform apply -auto-approve
+                """
+            }
+        }
+        stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    echo "Eliminando contenedores y red..."
-                    sh '''
-                    docker stop client-user-interface api-users auth-db
-                    docker rm client-user-interface api-users auth-db
-                    docker network rm user-network-app || true
-                    '''
+                    sh """
+                    kubectl config set-context aws-cluster
+                    kubectl config use-context aws-cluster
+                    """
+
+                    sh """
+                    kubectl apply -f k8s/deployment.yml
+                    """
                 }
             }
         }
     }
-
     post {
-        success {
-            echo "Pipeline ejecutado correctamente. Todos los servicios se levantaron y verificaron con éxito."
-        }
-        failure {
-            echo "Pipeline falló. Verificar logs y configuración."
-        }
         always {
-            script {
-                sh 'docker ps -a'
-            }
+            cleanWs()
         }
     }
 }
