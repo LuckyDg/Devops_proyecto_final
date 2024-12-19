@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { envs } from './config';
 import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
@@ -15,8 +16,12 @@ import { AuthModule } from './auth/auth.module';
       database: envs.db_name,
       synchronize: true,
       entities: [User],
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
     AuthModule,
+    FilesModule,
   ],
   controllers: [],
   providers: [],

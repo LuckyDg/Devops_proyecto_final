@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { BorderBeamDevops } from "../components/BorderBeamDevops";
 import { Navbar } from "../components/Navbar";
 import { RegistroForm } from "../components/RegisterForm";
 
@@ -55,7 +54,6 @@ export default function HomePageDevops() {
             style={{ y }}
             className="w-full flex flex-col items-center space-y-6"
           >
-            {/* <BorderBeamDevops /> */}
           </motion.div>
           <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10">
             <RegistroForm />

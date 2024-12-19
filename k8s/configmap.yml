@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fullstack-config
+data:
+  API_PORT: "64001"
+  DB_HOST: "database-1.chwyuocaecak.us-east-1.rds.amazonaws.com"
+  DB_PORT: "5432"
+  DB_NAME: "postgres"
+  DB_USER: "postgres"
+  DB_PASS: "postgres"
+  NEXT_PUBLIC_API_URL: "http://api-users-service:64001/api"
+  S3_BUCKET: "bucketdeprueba-19329223"

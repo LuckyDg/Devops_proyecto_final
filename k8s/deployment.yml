@@ -1,0 +1,86 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-users-deployment
+  labels:
+    app: api-users
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-users
+  template:
+    metadata:
+      labels:
+        app: api-users
+    spec:
+      containers:
+        - name: api-users
+          image: luckydg/ms-auth:latest
+          ports:
+            - containerPort: 64001
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: API_PORT
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: DB_HOST
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: DB_PASS
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: DB_NAME
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: fullstack-secrets
+                  key: JWT_SECRET
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-user-interface-angular-deployment
+  labels:
+    app: client-user-interface-angular
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-user-interface-angular
+  template:
+    metadata:
+      labels:
+        app: client-user-interface-angular
+    spec:
+      containers:
+        - name: client-user-interface-angular
+          image: luckydg/client-user-interface-angular:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: NEXT_PUBLIC_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: fullstack-config
+                  key: NEXT_PUBLIC_API_URL
