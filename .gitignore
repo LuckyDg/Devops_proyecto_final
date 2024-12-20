@@ -5,6 +5,5 @@ Gist-Comand.md
 *.tfstate
 *.tfstate.*
 .terraform/
-*.tfvars
 terraform.tfstate
 *.bak
