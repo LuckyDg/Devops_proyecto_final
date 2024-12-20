@@ -80,42 +80,36 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    sh """
                     echo '==========================='
                     echo 'Inicio: Generando el plan de ejecución de Terraform...'
                     echo '==========================='
-
+        
                     # Validar que las variables estén definidas
-                    if [ -z "${AWS_ACCESS_KEY_ID}" ]; then
-                        echo 'ERROR: AWS_ACCESS_KEY_ID no está configurado.'
+                    if ([ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$region" ]); then
+                        echo 'ERROR: Las variables de AWS no están configuradas.'
                         exit 1
                     fi
-
-                    if [ -z "${AWS_SECRET_ACCESS_KEY}" ]; then
-                        echo 'ERROR: AWS_SECRET_ACCESS_KEY no está configurado.'
-                        exit 1
-                    fi
-
-                    if [ -z "${region}" ]; then
-                        echo 'ERROR: region no está configurado.'
-                        exit 1
-                    fi
-
+        
                     echo 'Exportando variables de entorno para AWS...'
                     export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
                     export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
                     export region=${region}
-
+        
                     echo 'Ejecutando terraform plan...'
-                    terraform plan || { echo 'ERROR: terraform plan falló.'; exit 1; }
-
+                    sh """
+                    cd terraform
+                    terraform plan -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
+                                    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+                                    -var="region=${region}" \
+                                    -var="docker_image=${DOCKER_IMAGE}"
+                    """
                     echo '==========================='
                     echo 'Éxito: Terraform Plan completado correctamente.'
                     echo '==========================='
-                    """
                 }
             }
         }
+
         
         // stage('Terraform Apply') {
         //     steps {
