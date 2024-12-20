@@ -61,15 +61,15 @@ pipeline {
                 """
             }
         }
-        stage('Terraform Apply') {
-            steps {
-                input "¿Aplicar los cambios en AWS?"
-                sh """
-                cd terraform
-                terraform apply -auto-approve
-                """
-            }
-        }
+        // stage('Terraform Apply') {
+        //     steps {
+        //         input "¿Aplicar los cambios en AWS?"
+        //         sh """
+        //         cd terraform
+        //         terraform apply -auto-approve
+        //         """
+        //     }
+        // }
         stage('Deploy to Kubernetes') {
             steps {
                 script {
