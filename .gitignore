@@ -7,3 +7,5 @@ Gist-Comand.md
 .terraform/
 terraform.tfstate
 *.bak
+
+k8s-backup/
