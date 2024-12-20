@@ -83,18 +83,19 @@ pipeline {
                     echo '==========================='
                     echo 'Inicio: Generando el plan de ejecución de Terraform...'
                     echo '==========================='
-
-                    // # Validar que las variables estén definidas
-                    if ([ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$AWS_SECRET_ACCESS_KEY" ] || [ -z "$region" ]); then
+        
+                    // Validar que las variables estén definidas
+                    if (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY || !region) {
                         echo 'ERROR: Las variables de AWS no están configuradas.'
-                        exit 1
-                    fi
-
+                        currentBuild.result = 'FAILURE'
+                        return
+                    }
+        
                     echo 'Exportando variables de entorno para AWS...'
-                    export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-                    export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-                    export region=${region}
-
+                    env.AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
+                    env.AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
+                    env.region = region
+        
                     echo 'Ejecutando terraform plan...'
                     sh """
                     cd terraform
@@ -109,6 +110,7 @@ pipeline {
                 }
             }
         }
+
 
         
         // stage('Terraform Apply') {
