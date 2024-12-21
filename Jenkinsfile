@@ -14,6 +14,7 @@ pipeline {
         JWT_SECRET = credentials('jwt_secret')
         S3_BUCKET = credentials('s3_bucket')
         NEXT_PUBLIC_API_URL = credentials('next_public_api_url')
+        KEY_NAME = credentials('key_name')
     }
 
     stages {
