@@ -8,7 +8,7 @@ resource "aws_instance" "docker_host" {
   ami           = "ami-0c02fb55956c7d316"
   instance_type = var.instance_type
 
-  key_name = var.key_name
+  # key_name = var.key_name
 
   user_data = <<-EOF
               #!/bin/bash

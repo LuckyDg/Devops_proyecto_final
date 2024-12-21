@@ -14,7 +14,7 @@ pipeline {
         JWT_SECRET = credentials('jwt_secret')
         S3_BUCKET = credentials('s3_bucket')
         NEXT_PUBLIC_API_URL = credentials('next_public_api_url')
-        KEY_NAME = credentials('key_name')
+        // KEY_NAME = credentials('key_name')
     }
 
     stages {
@@ -84,7 +84,6 @@ pipeline {
                     -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
                     -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
                     -var="docker_image=${DOCKER_IMAGE}" \
-                    -var="key_name=${KEY_NAME}" \
                     -var="region=${REGION}" \
                     """
                 }
@@ -101,7 +100,6 @@ pipeline {
                     -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
                     -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
                     -var="docker_image=${DOCKER_IMAGE}" \
-                    -var="key_name=${KEY_NAME}" \
                     -var="region=${REGION}"
                     """
                     echo 'Cambios aplicados en AWS correctamente.'
