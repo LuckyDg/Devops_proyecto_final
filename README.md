@@ -23,6 +23,15 @@ El proyecto está estructurado de la siguiente manera:
 ├── client-user-interface/   # Frontend (Next.js o similar)
 │   ├── Dockerfile
 │   └── ...
+|── k8s/                      # Kubernetes
+│   ├── configmap.yml
+│   ├── deployment.yml
+│   ├── secret.yml
+│   └── service.yml
+|── terraform/                # Terraform
+│   ├── main.tf
+│   ├── network/
+|── Jenkinsfile               # Jenkinsfile
 ├── docker-compose.yml       # Configuración de Docker Compose
 ├── .env                     # Variables de entorno para Docker Compose
 └── README.md                # Documentación del proyecto
