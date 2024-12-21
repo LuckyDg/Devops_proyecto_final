@@ -1,5 +1,4 @@
 .env
-Gist-Comand.md
 
 # Ignorar archivos de estado de Terraform
 *.tfstate

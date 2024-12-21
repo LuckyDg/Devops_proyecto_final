@@ -96,7 +96,7 @@ Ejecuta los siguientes comandos desde el directorio principal del proyecto:
    - Backend: [http://localhost:64001/api](http://localhost:64001/api)
 
 4. **Probar con Postman**:
-   - Descargar [Postman](https://www.postman.com/downloads/) y el archivo de configuración [BootCamp_Devops_Monolito.postman_collection](BootCamp_Devops_Monolito.postman_collection) para probar la API.
+   - Descargar [Postman](https://www.postman.com/downloads/) y el archivo de configuración [BootCamp_Devops_Monolito.postman_collection](./Docs/BootCamp_Devops_Monolito.postman_collection) para probar la API.
    - Importar el archivo de configuración en Postman.
    - Abrir la colección y seleccionar la petición `GET /api/auth/users`.
 ---
@@ -125,3 +125,5 @@ Ejecuta los siguientes comandos desde el directorio principal del proyecto:
    # Ignorar archivos de entorno
    .env
    ```
+4. **Comandos útiles**:
+   - Consulta los comandos de Kubernetes y Docker en el archivo [Commands-Guide.md](./Docs/Commands-Guide.md).
