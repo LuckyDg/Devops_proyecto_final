@@ -19,13 +19,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: client-user-interface-service
-  labels:
-    app: client-user-interface
 spec:
   selector:
     app: client-user-interface
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 63001
+      targetPort: 63001
   type: LoadBalancer

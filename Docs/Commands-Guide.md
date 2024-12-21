@@ -242,7 +242,7 @@ docker build -t luckydg/ms-auth:latest ./api-users
 docker push luckydg/ms-auth:latest
 
 minikube service api-users-service --url
-minikube service client-user-interface-angular-service --url
+minikube service client-user-interface-service --url
 
 rm -rf ~/.aws
 aws sts get-caller-identity

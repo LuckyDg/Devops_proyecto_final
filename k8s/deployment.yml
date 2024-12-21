@@ -77,10 +77,10 @@ spec:
         - name: client-user-interface
           image: luckydg/client-user-interface:latest
           ports:
-            - containerPort: 80
+            - containerPort: 63001
           env:
             - name: NEXT_PUBLIC_API_URL
               valueFrom:
                 configMapKeyRef:
                   name: fullstack-config
-                  key: NEXT_PUBLIC_API_UR
+                  key: NEXT_PUBLIC_API_URL
