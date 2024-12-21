@@ -65,26 +65,12 @@ pipeline {
                 }
             }
         }
-        // stage('Terraform Plan') {
-        //     steps {
-        //         script {
-        //             echo 'Generando el plan de ejecución de Terraform...'
-        //             sh """
-        //             cd terraform
-        //             terraform plan
-        //             """
-        //             echo 'Plan de Terraform generado con éxito.'
-        //         }
-        //     }
-        // }
         stage('Terraform Plan') {
             steps {
                 script {
-                    echo 'Generando el plan de ejecución de Terraform..'
+                    echo 'Generando el plan de ejecución de Terraform...'
                     sh """
                     cd terraform
-                    export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-                    export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
                     terraform plan
                     """
                     echo 'Plan de Terraform generado con éxito.'
