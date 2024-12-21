@@ -107,22 +107,23 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         script {
-        //             echo 'Configurando contexto de Kubernetes...'
-        //             sh """
-        //             kubectl config set-context aws-cluster
-        //             kubectl config use-context aws-cluster
-        //             """
-        //             echo 'Desplegando la aplicación en Kubernetes...'
-        //             sh """
-        //             kubectl apply -f k8s/deployment.yml
-        //             """
         //             echo 'Aplicación desplegada correctamente en Kubernetes.'
-        //         }
-        //     }
-        // }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo 'Configurando contexto de Kubernetes...'
+                    sh """
+                    kubectl config set-context aws-cluster
+                    kubectl config use-context aws-cluster
+                    """
+                    echo 'Desplegando la aplicación en Kubernetes...'
+                    sh """
+                    kubectl apply -f k8s/deployment.yml
+                    """
+                    echo 'Aplicación desplegada correctamente en Kubernetes.'
+                }
+            }
+        }
         // stage('Terraform Destroy') {
         //     steps {
         //         script {
