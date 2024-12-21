@@ -18,12 +18,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: client-user-interface-angular-service
+  name: client-user-interface-service
   labels:
-    app: client-user-interface-angular
+    app: client-user-interface
 spec:
   selector:
-    app: client-user-interface-angular
+    app: client-user-interface
   ports:
     - protocol: TCP
       port: 80

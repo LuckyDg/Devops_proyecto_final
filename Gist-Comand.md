@@ -1,6 +1,6 @@
 # Kubernetes and Docker Commands Guide
 
-This guide consolidates commonly used Kubernetes, Docker, and general workflow commands for building, pushing, managing, and debugging your deployments. Use this as a reference to streamline your workflow.
+Comandos Utilizados
 
 ---
 
@@ -243,4 +243,9 @@ docker push luckydg/ms-auth:latest
 
 minikube service api-users-service --url
 minikube service client-user-interface-angular-service --url
+
+rm -rf ~/.aws
+aws sts get-caller-identity
 ```
+
+

@@ -60,27 +60,27 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: client-user-interface-angular-deployment
+  name: client-user-interface-deployment
   labels:
-    app: client-user-interface-angular
+    app: client-user-interface
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: client-user-interface-angular
+      app: client-user-interface
   template:
     metadata:
       labels:
-        app: client-user-interface-angular
+        app: client-user-interface
     spec:
       containers:
-        - name: client-user-interface-angular
-          image: luckydg/client-user-interface-angular:latest
+        - name: client-user-interface
+          image: luckydg/client-user-interface:latest
           ports:
-            - containerPort: 80
+            - containerPort: 63001
           env:
             - name: NEXT_PUBLIC_API_URL
               valueFrom:
                 configMapKeyRef:
                   name: fullstack-config
-                  key: NEXT_PUBLIC_API_URL
+                  key: NEXT_PUBLIC_API_UR
