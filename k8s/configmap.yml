@@ -4,7 +4,7 @@ metadata:
   name: fullstack-config
 data:
   API_PORT: "64001"
-  DB_HOST: "database-1.chwyuocaecak.us-east-1.rds.amazonaws.com"
+  DB_HOST: "devops-database.chwyuocaecak.us-east-1.rds.amazonaws.com"
   DB_PORT: "5432"
   DB_NAME: "postgres"
   DB_USER: "postgres"
