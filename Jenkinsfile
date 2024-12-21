@@ -107,7 +107,6 @@ pipeline {
             }
         }
 
-        //             echo 'Aplicación desplegada correctamente en Kubernetes.'
         stage('Deploy to Kubernetes') {
             steps {
                 script {
