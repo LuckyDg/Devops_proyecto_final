@@ -74,15 +74,29 @@ pipeline {
                 }
             }
         }
+        // stage('Terraform Plan') {
+        //     steps {
+        //         script {
+        //             echo 'Generando el plan de ejecución de Terraform...'
+        //             sh """
+        //             cd terraform
+        //             terraform plan
+        //             """
+        //             echo 'Plan de Terraform generado con éxito.'
+        //         }
+        //     }
+        // }
         stage('Terraform Plan') {
             steps {
                 script {
-                    echo 'Generando el plan de ejecución de Terraform...'
-                    sh """
-                    cd terraform
-                    terraform plan
-                    """
-                    echo 'Plan de Terraform generado con éxito.'
+                    sh '''
+                    terraform plan \
+                    -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
+                    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+                    -var="docker_image=${DOCKER_IMAGE}" \
+                    -var="key_name=${KEY_NAME}" \
+                    -var="region=${REGION}" \
+                    '''
                 }
             }
         }
