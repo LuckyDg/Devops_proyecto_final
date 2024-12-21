@@ -90,24 +90,24 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    echo 'Esperando confirmación para aplicar los cambios en AWS...'
-                    echo 'Aplicando los cambios en AWS...'
-                    sh """
-                    cd terraform
-                    terraform apply -auto-approve \
-                    -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
-                    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
-                    -var="docker_image=${DOCKER_IMAGE}" \
-                    -var="key_name=${KEY_NAME}" \
-                    -var="region=${REGION}"
-                    """
-                    echo 'Cambios aplicados en AWS correctamente.'
-                }
-            }
-        }
+        // stage('Terraform Apply') {
+        //     steps {
+        //         script {
+        //             echo 'Esperando confirmación para aplicar los cambios en AWS...'
+        //             echo 'Aplicando los cambios en AWS...'
+        //             sh """
+        //             cd terraform
+        //             terraform apply -auto-approve \
+        //             -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
+        //             -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+        //             -var="docker_image=${DOCKER_IMAGE}" \
+        //             -var="key_name=${KEY_NAME}" \
+        //             -var="region=${REGION}"
+        //             """
+        //             echo 'Cambios aplicados en AWS correctamente.'
+        //         }
+        //     }
+        // }
 
         stage('Deploy to Kubernetes') {
             steps {
@@ -125,23 +125,23 @@ pipeline {
                 }
             }
         }
-        stage('Terraform Destroy') {
-            steps {
-                script {
-                    echo 'Destruyendo los recursos creados por Terraform...'
-                    sh """
-                    cd terraform
-                    terraform destroy -auto-approve \
-                    -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
-                    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
-                    -var="docker_image=${DOCKER_IMAGE}" \
-                    -var="key_name=${KEY_NAME}" \
-                    -var="region=${REGION}"
-                    """
-                    echo 'Recursos destruidos correctamente.'
-                }
-            }
-        }
+        // stage('Terraform Destroy') {
+        //     steps {
+        //         script {
+        //             echo 'Destruyendo los recursos creados por Terraform...'
+        //             sh """
+        //             cd terraform
+        //             terraform destroy -auto-approve \
+        //             -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
+        //             -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+        //             -var="docker_image=${DOCKER_IMAGE}" \
+        //             -var="key_name=${KEY_NAME}" \
+        //             -var="region=${REGION}"
+        //             """
+        //             echo 'Recursos destruidos correctamente.'
+        //         }
+        //     }
+        // }
     }
 
     post {
