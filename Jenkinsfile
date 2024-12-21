@@ -89,14 +89,15 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    sh '''
+                    sh """
+                    cd terraform 
                     terraform plan \
                     -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
                     -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
                     -var="docker_image=${DOCKER_IMAGE}" \
                     -var="key_name=${KEY_NAME}" \
                     -var="region=${REGION}" \
-                    '''
+                    """
                 }
             }
         }
