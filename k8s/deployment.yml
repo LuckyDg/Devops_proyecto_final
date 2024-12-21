@@ -77,7 +77,7 @@ spec:
         - name: client-user-interface
           image: luckydg/client-user-interface:latest
           ports:
-            - containerPort: 63001
+            - containerPort: 80
           env:
             - name: NEXT_PUBLIC_API_URL
               valueFrom:
