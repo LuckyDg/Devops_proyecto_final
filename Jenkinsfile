@@ -80,7 +80,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    echo 'Generando el plan de ejecución de Terraform...'
+                    echo 'Generando el plan de ejecución de Terraform..'
                     sh """
                     cd terraform
                     export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
