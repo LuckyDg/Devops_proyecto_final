@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     git branch: 'main', url: 'https://github.com/LuckyDg/Devops_proyecto_final.git'
-                    echo 'Código descargado correctamente'
+                    echo 'Código descargado correctamente...'
                 }
             }
         }
