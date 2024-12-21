@@ -11,7 +11,7 @@ interface EnvVars {
   JWT_SECRET: string;
   AWS_ACCESS_KEY_ID: string;
   AWS_SECRET_ACCESS_KEY: string;
-  S3_BUCKET: string;
+  // S3_BUCKET: string;
   AWS_REGION: string;
 }
 
@@ -26,7 +26,7 @@ const evnsSchema = joi
     JWT_SECRET: joi.string().required(),
     AWS_ACCESS_KEY_ID: joi.string().required(),
     AWS_SECRET_ACCESS_KEY: joi.string().required(),
-    S3_BUCKET: joi.string().required(),
+    // S3_BUCKET: joi.string().required(),
     AWS_REGION: joi.string().required(),
   })
   .unknown(true);
@@ -49,6 +49,6 @@ export const envs = {
   jwtSecret: envVars.JWT_SECRET,
   awsAccessKeyId: envVars.AWS_ACCESS_KEY_ID,
   awsSecretAccessKey: envVars.AWS_SECRET_ACCESS_KEY,
-  awsBucketName: envVars.S3_BUCKET,
+  // awsBucketName: envVars.S3_BUCKET,
   awsRegion: envVars.AWS_REGION,
 };
