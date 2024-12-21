@@ -9,10 +9,10 @@ interface EnvVars {
   DB_PASS: string;
   DB_NAME: string;
   JWT_SECRET: string;
-  // AWS_ACCESS_KEY_ID: string;
-  // AWS_SECRET_ACCESS_KEY: string;
-  // S3_BUCKET: string;
-  // AWS_REGION: string;
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
+  S3_BUCKET: string;
+  AWS_REGION: string;
 }
 
 const evnsSchema = joi
@@ -24,10 +24,10 @@ const evnsSchema = joi
     DB_PASS: joi.string().required(),
     DB_NAME: joi.string().required(),
     JWT_SECRET: joi.string().required(),
-    // AWS_ACCESS_KEY_ID: joi.string().required(),
-    // AWS_SECRET_ACCESS_KEY: joi.string().required(),
-    // S3_BUCKET: joi.string().required(),
-    // AWS_REGION: joi.string().required(),
+    AWS_ACCESS_KEY_ID: joi.string().required(),
+    AWS_SECRET_ACCESS_KEY: joi.string().required(),
+    S3_BUCKET: joi.string().required(),
+    AWS_REGION: joi.string().required(),
   })
   .unknown(true);
 
@@ -47,8 +47,8 @@ export const envs = {
   db_pass: envVars.DB_PASS,
   db_name: envVars.DB_NAME,
   jwtSecret: envVars.JWT_SECRET,
-  // awsAccessKeyId: envVars.AWS_ACCESS_KEY_ID,
-  // awsSecretAccessKey: envVars.AWS_SECRET_ACCESS_KEY,
-  // awsBucketName: envVars.S3_BUCKET,
-  // awsRegion: envVars.AWS_REGION,
+  awsAccessKeyId: envVars.AWS_ACCESS_KEY_ID,
+  awsSecretAccessKey: envVars.AWS_SECRET_ACCESS_KEY,
+  awsBucketName: envVars.S3_BUCKET,
+  awsRegion: envVars.AWS_REGION,
 };
