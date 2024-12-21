@@ -94,7 +94,6 @@ pipeline {
             steps {
                 script {
                     echo 'Esperando confirmación para aplicar los cambios en AWS...'
-                    input "¿Aplicar los cambios en AWS?"
                     echo 'Aplicando los cambios en AWS...'
                     sh """
                     cd terraform
