@@ -75,18 +75,6 @@ pipeline {
                 }
             }
         }
-        // stage('Terraform Plan') {
-        //     steps {
-        //         script {
-        //             echo 'Generando el plan de ejecución de Terraform...'
-        //             sh """
-        //             cd terraform
-        //             terraform plan
-        //             """
-        //             echo 'Plan de Terraform generado con éxito.'
-        //         }
-        //     }
-        // }
         stage('Terraform Plan') {
             steps {
                 script {
@@ -99,6 +87,53 @@ pipeline {
                     -var="key_name=${KEY_NAME}" \
                     -var="region=${REGION}" \
                     """
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    echo 'Esperando confirmación para aplicar los cambios en AWS...'
+                    input "¿Aplicar los cambios en AWS?"
+                    echo 'Aplicando los cambios en AWS...'
+                    sh """
+                    cd terraform
+                    terraform apply -auto-approve
+                    """
+                    echo 'Cambios aplicados en AWS correctamente.'
+                }
+            }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    echo 'Configurando contexto de Kubernetes...'
+                    sh """
+                    kubectl config set-context aws-cluster
+                    kubectl config use-context aws-cluster
+                    """
+                    echo 'Desplegando la aplicación en Kubernetes...'
+                    sh """
+                    kubectl apply -f k8s/deployment.yml
+                    """
+                    echo 'Aplicación desplegada correctamente en Kubernetes.'
+                }
+            }
+        }
+        stage('Terraform Destroy') {
+            steps {
+                script {
+                    echo 'Destruyendo los recursos creados por Terraform...'
+                    sh """
+                    cd terraform
+                    terraform destroy -auto-approve \
+                    -var="aws_access_key=${AWS_ACCESS_KEY_ID}" \
+                    -var="aws_secret_key=${AWS_SECRET_ACCESS_KEY}" \
+                    -var="docker_image=${DOCKER_IMAGE}" \
+                    -var="key_name=${KEY_NAME}" \
+                    -var="region=${REGION}"
+                    """
+                    echo 'Recursos destruidos correctamente.'
                 }
             }
         }
